@@ -1,0 +1,16 @@
+---
+
+- hosts: all
+  become: true
+  tasks:
+    - name: update packages
+      apt:
+        update_cache: true
+        upgrade: dist
+    - name: install essentials
+      apt:
+        name:
+          - ufw
+          - unattended-upgrades
+          - screen
+        state: latest

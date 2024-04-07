@@ -1,0 +1,44 @@
+---
+- hosts: all
+  become: true
+  tasks:
+  - name: enable ufw firewall
+    community.general.ufw:
+      state: enabled
+
+  - name: set default policies
+    community.general.ufw:
+      default: deny
+      direction: incoming
+
+  - name: limit inbound SSH
+    community.general.ufw:
+      rule: limit
+      port: 22
+      proto: tcp
+
+  - name: allow http
+    community.general.ufw:
+      rule: allow
+      port: 80
+      proto: tcp
+
+  - name: allow DNS for Pi-hole (tcp)
+    community.general.ufw:
+      rule: allow
+      port: 53
+      proto: tcp
+
+  - name: allow DNS for Pi-hole (udp)
+    community.general.ufw:
+      rule: allow
+      port: 53
+      proto: udp
+  
+  - name: allow access to Syncthing Web-UI
+    community.general.ufw:
+      rule: allow
+      port: 8384
+      proto: tcp
+      src: 192.168.10.0/24
+      comment: "syncthing web ui"
