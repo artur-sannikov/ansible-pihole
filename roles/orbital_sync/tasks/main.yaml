@@ -1,0 +1,15 @@
+- name: Start/Update Orbital Sync container
+  community.docker.docker_container:
+    name: orbital_sync
+    image: "{{ orbital_sync_image }}"
+    pull: true
+    restart_policy: unless-stopped
+    env:
+      PRIMARY_HOST_BASE_URL: "{{ orbital_sync_primary_host_base_url }}"
+      PRIMARY_HOST_PASSWORD: "{{ orbital_sync_primary_host_password }}"
+      SECONDARY_HOSTS_1_BASE_URL: "{{ orbital_sync_secondary_host_1_base_url }}"
+      SECONDARY_HOSTS_1_PASSWORD: "{{ orbital_sync_secondary_host_1_password }}"
+    log_driver: json-file
+    log_options:
+      max-size: "10m"
+      max-file: "5"

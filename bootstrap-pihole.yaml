@@ -9,3 +9,9 @@
     - docker
     - pihole
     - start_keepalived
+
+- name: Install Orbital Sync on primary pihole
+  hosts: pihole-1-vm
+  become: true
+  roles:
+    - orbital_sync
