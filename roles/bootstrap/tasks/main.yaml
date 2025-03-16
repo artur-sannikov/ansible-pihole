@@ -62,26 +62,26 @@
 #     block: static domain_name_servers={{ static_dns }}
 #   notify: Restart dhcpcd
 
-- name: Disable stub resolver for (see https://github.com/pi-hole/docker-pi-hole/?tab=readme-ov-file#installing-on-ubuntu-or-fedora)
-  ansible.builtin.lineinfile:
-    path: /etc/systemd/resolved.conf
-    regexp: '^#?DNSStubListener='
-    line: 'DNSStubListener=no'
-  when: ansible_distribution == "Debian"
+- name: Apply specific tasks to pihole on Debian
+  when: inventory_hostname == "pihole-1-vm"
+  block:
+    - name: Disable stub resolver for (see https://github.com/pi-hole/docker-pi-hole/?tab=readme-ov-file#installing-on-ubuntu-or-fedora)
+      ansible.builtin.lineinfile:
+        path: /etc/systemd/resolved.conf
+        regexp: '^#?DNSStubListener='
+        line: 'DNSStubListener=no'
 
-- name: Remove /etc/resolv.conf
-  ansible.builtin.file:
-    path: /etc/resolv.conf
-    state: absent
-  when: ansible_distribution == "Debian"
+    - name: Remove /etc/resolv.conf
+      ansible.builtin.file:
+        path: /etc/resolv.conf
+        state: absent
 
-- name: Create symlink from /run/systemd/resolve/resolv.conf to /etc/resolv.conf
-  ansible.builtin.file:
-    src: /run/systemd/resolve/resolv.conf
-    dest: /etc/resolv.conf
-    state: link
-  when: ansible_distribution == "Debian"
-  notify: Restart systemd-resolved
+    - name: Create symlink from /run/systemd/resolve/resolv.conf to /etc/resolv.conf
+      ansible.builtin.file:
+        src: /run/systemd/resolve/resolv.conf
+        dest: /etc/resolv.conf
+        state: link
+      notify: Restart systemd-resolved
 
 - name: Generate sshd_config from template
   ansible.builtin.template:
@@ -95,6 +95,7 @@
 - name: Install ufw
   ansible.builtin.apt:
     name: ufw
+    update_cache: true
 
 - name: Limit access to ssh port
   tags: ufw
