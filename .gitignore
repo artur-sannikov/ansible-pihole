@@ -2,3 +2,5 @@
 .vscode/
 .ansible/
 roles/orbital_sync/vars/main.yaml
+group_vars/all/main.yaml
+
