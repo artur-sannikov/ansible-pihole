@@ -1,0 +1,101 @@
+
+# This is the sshd server system-wide configuration file.  See
+# sshd_config(5) for more information.
+
+# This sshd was compiled with PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games
+
+# The strategy used for options in the default sshd_config shipped with
+# OpenSSH is to specify options with their default value where
+# possible, but leave them commented.  Uncommented options override the
+# default value.
+
+Include /etc/ssh/sshd_config.d/*.conf
+
+HostKey /etc/ssh/ssh_host_rsa_key
+HostKey /etc/ssh/ssh_host_ed25519_key
+
+# Cryptography
+{{ 'Ciphers ' ~ bootstrap_ssh_ciphers|join(',') }}
+{{ 'MACs ' ~ bootstrap_ssh_macs|join(',') }}
+{{ 'KexAlgorithms ' ~ bootstrap_ssh_kex|join(',') }}
+{{ 'HostKeyAlgorithms ' ~ bootstrap_ssh_client_host_key_algorithms|join(',') }}
+{{ 'PubkeyAcceptedAlgorithms ' ~ bootstrap_ssh_pubkey_accepted_algorithms|join(',') }}
+
+# Authentication
+# --------------
+LoginGraceTime 30s
+PermitRootLogin no
+StrictModes yes
+MaxAuthTries 3
+MaxSessions 10
+MaxStartups 10:30:60
+
+IgnoreRhosts yes
+IgnoreUserKnownHosts yes
+HostbasedAuthentication no
+
+AuthenticationMethods publickey
+
+# To disable tunneled clear text passwords, change to no here!
+PermitEmptyPasswords no
+PasswordAuthentication no
+
+# Kerberos options
+KerberosAuthentication no
+KerberosOrLocalPasswd no
+KerberosTicketCleanup yes
+
+# Network
+# -------
+TCPKeepAlive no
+ClientAliveInterval 300
+ClientAliveCountMax 3
+
+# Disable tunneling
+PermitTunnel no
+
+AllowAgentForwarding no
+AllowTcpForwarding no
+
+GatewayPorts no
+X11Forwarding no
+X11UseLocalhost yes
+
+# Miscellaneous
+# -------
+
+Compression no
+PrintMotd no
+
+# no default banner path
+Banner false
+
+# Change to yes to enable challenge-response passwords (beware issues with
+# some PAM modules and threads)
+KbdInteractiveAuthentication no
+
+# Set this to 'yes' to enable PAM authentication, account processing,
+# and session processing. If this is enabled, PAM authentication will
+# be allowed through the KbdInteractiveAuthentication and
+# PasswordAuthentication.  Depending on your PAM configuration,
+# PAM authentication via KbdInteractiveAuthentication may bypass
+# the setting of "PermitRootLogin prohibit-password".
+# If you just want the PAM account and session checks to run without
+# PAM authentication, then enable this but set PasswordAuthentication
+# and KbdInteractiveAuthentication to 'no'.
+UsePAM yes
+
+#X11DisplayOffset 10
+#PermitTTY yes
+#PrintLastLog yes
+#PermitUserEnvironment no
+#PidFile /run/sshd.pid
+#PermitTunnel no
+#ChrootDirectory none
+#VersionAddendum none
+
+# Allow client to pass locale environment variables
+AcceptEnv LANG LC_*
+
+# override default of no subsystems
+Subsystem	sftp	/usr/lib/openssh/sftp-server
