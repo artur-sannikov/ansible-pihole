@@ -10,8 +10,9 @@
     - pihole
     - start_keepalived
 
-- name: Install Orbital Sync on primary pihole
-  hosts: pihole-1-vm
-  become: true
-  roles:
-    - orbital_sync
+# Enable when released: https://github.com/mattwebbio/orbital-sync/issues/190
+# - name: Install Orbital Sync on primary pihole
+#   hosts: pihole-1-vm
+#   become: true
+#   roles:
+#     - orbital_sync
