@@ -1,7 +1,6 @@
 - name: Install gpg
   ansible.builtin.apt:
     name: gpg
-
 - name: Add Docker apt key
   ansible.builtin.apt_key:
     url: https://download.docker.com/linux/debian/gpg
