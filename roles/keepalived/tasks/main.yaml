@@ -3,7 +3,6 @@
     path: /etc/sysctl.conf
     block: |
       net.ipv4.ip_nonlocal_bind = 1
-      net.ipv6.ip_nonlocal_bind = 1
   notify: Reload sysctl config
 
 - name: Flush handlers
