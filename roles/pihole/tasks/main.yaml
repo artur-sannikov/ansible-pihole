@@ -16,8 +16,8 @@
       TZ: "{{ timezone }}"
       FTLCONF_webserver_api_password: "{{ ftlconf_webserver_api_password }}"
       FTLCONF_dns_upstreams: "{{ ftlconf_dns_upstreams }}"
-      FTLCONF_dns_listeningMode: "local"
-      FTLCONF_dns_revServers: "{{ ftlconf_dns_revservers }}"
+      FTLCONF_dns_listeningMode: 'SINGLE'
+      FTLCONF_dns_interface: 'eth0' # To make it work across VLANs
     dns_servers:
       - 127.0.0.1
       - "{{ static_dns }}"

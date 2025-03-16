@@ -1,19 +1,20 @@
 all:
   hosts:
-    pihole-1:
-      ansible_host: 192.168.178.45
+    pihole-1-raspios:
+      ansible_host: 192.168.10.105
+      ansible_user: pi
       priority: 101
-    pihole-2:
-      ansible_host: 192.168.178.46
+    pihole-2-vm:
+      ansible_host: 192.168.10.107
+      ansible_user: artur
       priority: 100
   vars:
-    ansible_user: pi
-    timezone: "Europe/Berlin"
-    static_dns: "1.1.1.1"
+    timezone: "Europe/Helsinki"
+    static_dns: "192.168.10.1"
     pihole_image: "pihole/pihole:2025.03.0"
     ftlconf_webserver_api_password: Intranet # example value, change it and better use ansible-vault
-    ftlconf_dns_upstreams: "1.1.1.1;2606:4700:4700::1111"
-    ftlconf_dns_revservers: "true,192.168.178.0/24,192.168.178.1,fritz.box"
-    pihole_vip_ipv4: "192.168.178.10/24"
-    pihole_vip_ipv6: "fd00::10/64"
-    sync_target: "{{ pihole_vip_ipv4.split('/')[0] }}"
+    ftlconf_dns_upstreams: "192.168.10.1#53"
+    # ftlconf_dns_revservers: "true,192.168.178.0/24,192.168.178.1,fritz.box"
+    pihole_vip_ipv4: "192.168.10.50/24"
+    # pihole_vip_ipv6: "fd00::10/64"
+    # sync_target: "{{ pihole_vip_ipv4.split('/')[0] }}"
