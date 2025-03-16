@@ -1,20 +1,19 @@
 all:
   hosts:
-    pihole-1-raspios:
-      ansible_host: 192.168.10.105
-      ansible_user: pi
-      priority: 101
-    pihole-2-vm:
-      ansible_host: 192.168.10.107
+    pihole-1-vm:
+      ansible_host: 192.168.10.7
       ansible_user: artur
       priority: 100
+    pihole-2-raspios:
+      ansible_host: 192.168.10.3
+      ansible_user: artur
+      priority: 101
   vars:
     timezone: "Europe/Helsinki"
     static_dns: "192.168.10.1"
     pihole_image: "pihole/pihole:2025.03.0"
-    ftlconf_webserver_api_password: Intranet # example value, change it and better use ansible-vault
+    orbital_sync_image: "ghcr.io/mattwebbio/orbital-sync:latest"
+    ftlconf_webserver_api_password: "{{ ftlconf_webserver_api_password }}" # Initial password, change after first login
     ftlconf_dns_upstreams: "192.168.10.1#53"
-    # ftlconf_dns_revservers: "true,192.168.178.0/24,192.168.178.1,fritz.box"
-    pihole_vip_ipv4: "192.168.10.50/24"
-    # pihole_vip_ipv6: "fd00::10/64"
-    # sync_target: "{{ pihole_vip_ipv4.split('/')[0] }}"
+    pihole_vip_ipv4: "192.168.10.9/24"
+    sshd_template_file: sshd_config.j2
