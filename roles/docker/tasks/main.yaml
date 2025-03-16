@@ -1,18 +1,22 @@
+- name: Install gpg
+  ansible.builtin.apt:
+    name: gpg
+
 - name: Add Docker apt key
   ansible.builtin.apt_key:
-    url: https://download.docker.com/linux/raspbian/gpg
+    url: https://download.docker.com/linux/debian/gpg
     id: 9DC858229FC7DD38854AE2D88D81803C0EBFCD88
 
 - name: Add Docker apt repository
   ansible.builtin.apt_repository:
-    repo: deb https://download.docker.com/linux/raspbian {{ ansible_distribution_release }} stable
+    repo: deb https://download.docker.com/linux/debian {{ ansible_distribution_release }} stable
     filename: docker
 
 - name: Install Docker
   ansible.builtin.apt:
     name:
-      - docker-ce:armhf
-      - python3-docker
+      - docker-ce
+      - docker-ce-cli
     install_recommends: false
 
 - name: Add user to docker group
@@ -20,17 +24,6 @@
     name: "{{ ansible_user }}"
     append: true
     groups: docker
-
-- name: Enable Docker IPv6
-  ansible.builtin.copy:
-    dest: /etc/docker/daemon.json
-    mode: "600"
-    content: |
-      {
-        "ipv6": true,
-        "fixed-cidr-v6": "2001:db8:1::/64"
-      }
-  notify: Restart Docker
 
 - name: Flush handlers
   ansible.builtin.meta: flush_handlers

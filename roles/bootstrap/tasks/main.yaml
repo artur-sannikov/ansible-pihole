@@ -62,5 +62,26 @@
     block: static domain_name_servers={{ static_dns }}
   notify: Restart dhcpcd
 
+- name: Disable stub resolver for (see https://github.com/pi-hole/docker-pi-hole/?tab=readme-ov-file#installing-on-ubuntu-or-fedora)
+  ansible.builtin.lineinfile:
+    path: /etc/systemd/resolved.conf
+    regexp: '^#?DNSStubListener='
+    line: 'DNSStubListener=no'
+  when: ansible_distribution == "Debian"
+
+- name: Remove /etc/resolv.conf
+  ansible.builtin.file:
+    path: /etc/resolv.conf
+    state: absent
+  when: ansible_distribution == "Debian"
+
+- name: Create symlink from /run/systemd/resolve/resolv.conf to /etc/resolv.conf
+  ansible.builtin.file:
+    src: /run/systemd/resolve/resolv.conf
+    dest: /etc/resolv.conf
+    state: link
+  when: ansible_distribution == "Debian"
+  notify: Restart systemd-resolved
+
 - name: Flush handlers
   ansible.builtin.meta: flush_handlers
