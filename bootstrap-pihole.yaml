@@ -3,6 +3,7 @@
   become: true
   serial: 1
   roles:
+    - common_handlers
     - stop_keepalived
     - bootstrap
     - updates

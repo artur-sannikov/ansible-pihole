@@ -52,15 +52,15 @@
     line: 127.0.1.1       {{ inventory_hostname }}
   notify: Reboot after hostname change
 
-- name: Install dhcpcd
-  ansible.builtin.apt:
-    name: dhcpcd
+# - name: Install dhcpcd
+#   ansible.builtin.apt:
+#     name: dhcpcd
 
-- name: Set custom DNS servers
-  ansible.builtin.blockinfile:
-    path: /etc/dhcpcd.conf
-    block: static domain_name_servers={{ static_dns }}
-  notify: Restart dhcpcd
+# - name: Set custom DNS servers
+#   ansible.builtin.blockinfile:
+#     path: /etc/dhcpcd.conf
+#     block: static domain_name_servers={{ static_dns }}
+#   notify: Restart dhcpcd
 
 - name: Disable stub resolver for (see https://github.com/pi-hole/docker-pi-hole/?tab=readme-ov-file#installing-on-ubuntu-or-fedora)
   ansible.builtin.lineinfile:
@@ -91,6 +91,34 @@
     group: root
     mode: "0644"
   notify: Restart SSH
+
+- name: Install ufw
+  ansible.builtin.apt:
+    name: ufw
+
+- name: Limit access to ssh port
+  tags: ufw
+  community.general.ufw:
+    rule: limit
+    src: 192.168.10.0/24
+    port: "22"
+    proto: tcp
+
+- name: Deny other incoming traffic and enable ufw
+  tags: ufw
+  community.general.ufw:
+    state: enabled
+    policy: deny
+    direction: incoming
+
+- name: Disable ufw IPv6
+  tags: ufw
+  ansible.builtin.lineinfile:
+    path: /etc/default/ufw
+    regexp: ^IPV6=
+    line: IPV6=no
+  notify:
+    - Reload ufw
 
 - name: Flush handlers
   ansible.builtin.meta: flush_handlers
