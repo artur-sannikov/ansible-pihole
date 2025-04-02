@@ -1,4 +1,0 @@
-orbital_sync_primary_host_base_url: http://192.168.10.107
-orbital_sync_primary_host_password: test
-orbital_sync_secondary_host_1_base_url: http://192.168.10.105
-orbital_sync_secondary_host_1_password: test
