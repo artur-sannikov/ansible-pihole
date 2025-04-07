@@ -1,11 +1,11 @@
 all:
   hosts:
     pihole-1-vm:
-      ansible_host: 192.168.10.7
+      ansible_host: pihole
       ansible_user: artur
       priority: 100
     pihole-2-raspios:
-      ansible_host: 192.168.10.3
+      ansible_host: pi
       ansible_user: artur
       priority: 101
   vars:
