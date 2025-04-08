@@ -1,0 +1,13 @@
+- name: Start/Update Nebula Sync container
+  community.docker.docker_container:
+    name: nebula-sync
+    image: "ghcr.io/lovelaze/nebula-sync:latest"
+    pull: true
+    restart_policy: unless-stopped
+    env:
+      TZ: "{{ timezone }}"
+      PRIMARY: "{{ primary_pihole }}"
+      REPLICAS: "{{ secondary_pihole }}"
+      FULL_SYNC: 'true'
+      RUN_GRAVITY: 'true'
+      CRON: "0 * * * *"
