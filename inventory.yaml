@@ -12,7 +12,6 @@ all:
     timezone: "Europe/Helsinki"
     static_dns: "192.168.10.1"
     pihole_image: "pihole/pihole:2025.03.0"
-    orbital_sync_image: "ghcr.io/mattwebbio/orbital-sync:latest"
     ftlconf_webserver_api_password: "{{ ftlconf_webserver_api_password }}" # Initial password, change after first login
     ftlconf_dns_upstreams: "192.168.10.1#53"
     pihole_vip_ipv4: "192.168.10.9/24"
