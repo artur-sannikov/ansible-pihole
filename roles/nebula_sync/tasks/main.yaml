@@ -10,4 +10,4 @@
       REPLICAS: "{{ secondary_pihole }}"
       FULL_SYNC: 'true'
       RUN_GRAVITY: 'true'
-      CRON: "0 * * * *"
+      CRON: "0 3 * * *"
