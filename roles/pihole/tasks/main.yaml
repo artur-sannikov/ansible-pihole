@@ -32,6 +32,7 @@
       - CAP_NET_BIND_SERVICE
       - CAP_SYS_NICE
       - CAP_CHOWN
+      - CAP_SYS_TIME
 
 - name: Check pihole container
   ansible.builtin.uri:
