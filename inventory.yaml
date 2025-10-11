@@ -16,3 +16,4 @@ all:
     ftlconf_dns_upstreams: "192.168.10.1#53"
     pihole_vip_ipv4: "192.168.10.9/24"
     sshd_template_file: sshd_config.j2
+    docker_users: artur
