@@ -7,7 +7,8 @@
     - stop_keepalived
     - bootstrap
     - updates
-    - docker
+    - geerlingguy.pip
+    - geerlingguy.docker
     - pihole
     - start_keepalived
 
