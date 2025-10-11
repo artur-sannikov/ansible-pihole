@@ -25,11 +25,11 @@
             python313Packages.ansible
             python313Packages.ansible-core
           ];
-          # shellHook = ''
-          #   export ANSIBLE_COLLECTIONS_PATH="$PWD/ansible/ansible_collections"
-          #   export ANSIBLE_ROLES_PATH="$PWD/ansible/roles"
-          #   ansible-galaxy install -r ansible/requirements.yaml
-          # '';
+          shellHook = ''
+              export ANSIBLE_COLLECTIONS_PATH="$PWD/ansible_collections"
+              export ANSIBLE_ROLES_PATH="$PWD/roles"
+              ansible-galaxy install -r requirements.yaml
+            # '';
         };
       }
     );
