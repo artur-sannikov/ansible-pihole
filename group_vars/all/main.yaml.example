@@ -1,1 +1,3 @@
 ftlconf_webserver_api_password: eggbeater-strongbox-goldmine4-vixen
+primary_pihole: http://ph1.example.com|password
+secondary_pihole: http://ph2.example.com|password
