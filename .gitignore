@@ -1,6 +1,8 @@
 .DS_Store
 .vscode/
 .ansible/
+ansible_collections/
+roles/geerlingguy*/
 roles/orbital_sync/vars/main.yaml
 group_vars/all/main.yaml
-
+ansible.cfg
