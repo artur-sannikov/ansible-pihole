@@ -5,6 +5,9 @@ all:
       ansible_user: artur
       priority: 100
     pihole-2-raspios:
+      ansible_become_password: >-
+        {{ lookup('community.general.bitwarden',
+        'raspberry-pi-password', field='password') | first }}
       ansible_host: pi
       ansible_user: artur
       priority: 101
