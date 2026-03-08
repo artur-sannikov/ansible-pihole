@@ -1,3 +1,4 @@
+---
 all:
   hosts:
     pihole-1-vm:
@@ -5,16 +6,15 @@ all:
       ansible_user: artur
       priority: 100
     pihole-2-raspios:
-      ansible_become_password: >-
-        {{ lookup('community.general.bitwarden',
-        'raspberry-pi-password', field='password') | first }}
+      ansiblle_become_password: >-
+        {{ lookup('ansible.builtin.pipe', 'rbw get raspberry-pi-password') }}
       ansible_host: pi
       ansible_user: artur
       priority: 101
   vars:
     timezone: "Europe/Helsinki"
     static_dns: "192.168.10.1"
-    pihole_image: "pihole/pihole:2025.11.1"
+    pihole_image: "pihole/pihole:2026.02.0"
     ftlconf_webserver_api_password: "{{ ftlconf_webserver_api_password }}" # Initial password, change after first login
     ftlconf_dns_upstreams: "192.168.10.1#53"
     pihole_vip_ipv4: "192.168.10.9/24"
